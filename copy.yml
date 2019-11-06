@@ -1,0 +1,14 @@
+
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: to copy file
+    copy:
+      src: '/root/playbooks/copy.yml'
+      dest: '/root/gitrepo/scripts'
+
+  - name: Display msg
+    debug: 
+        msg: file copied! 
+    
