@@ -1,0 +1,22 @@
+
+
+---
+- hosts: all
+  become: true
+  vars_prompt:
+  - name: Package1
+    prompt: Enter Package1
+    private: no
+
+  - name: Package2
+    prompt: Enter Package2
+    private: yes
+  
+  tasks:
+  - name: To install {{Package1}}
+    apt: name={{Package1}} state=latest
+    when: ansible_distribution == "Ubuntu"
+  
+  - name: To install  {{Package2}}
+    yum: name={{Package2}} state=latest
+    when: ansible_distribution == "CentOS" 

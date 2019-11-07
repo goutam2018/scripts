@@ -1,0 +1,15 @@
+
+---
+- hosts: all
+  become: true
+  vars:
+  - pack1: git-core
+  - pack2: net-tools
+  tasks:
+  - name: to install {{pack1}}
+    apt: name={{pack1}} state=absent
+    when: ansible_distribution == 'Ubuntu'
+ 
+  - name: to install {{pack2}}
+    yum: name={{pack2}} state=absent
+    when: ansible_distribution == "CentOS"
