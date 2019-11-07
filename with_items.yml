@@ -1,0 +1,19 @@
+
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: to copy {{item}}
+    copy: 
+       src: '/root/files/{{item}}'
+       dest: '/opt/{{item}}'
+
+    with_items:
+     - file1.txt
+     - file2.txt
+     - file3.txt
+     - file4.txt
+
+
+
+
