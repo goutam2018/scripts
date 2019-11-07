@@ -1,0 +1,31 @@
+
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: to update packages
+    raw: apt-get update
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: to update packages
+    raw: yum update 
+    when: ansible_distribution == "CentOS"
+
+  - name: to install mysql-server
+    apt: name=mysql-server state=latest
+    when: ansible_distribution == "Ubuntu"
+    notify:
+        - start mysql-server
+
+  - name: to install mariadb
+    yum: name=mariadb-server state=latest
+    when: ansible_distribution == "CentOS"
+    notify:
+        - start mariadb
+
+  handlers:
+  - name: to start mysql service
+    service: name=mysql state=started
+    
+  - name: to start mariadb service
+    service: name=mariadb state=started
