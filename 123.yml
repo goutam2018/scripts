@@ -1,0 +1,15 @@
+---
+- hosts: all
+  became: true
+  tasks:
+  - name: To add group 
+    group: name=wipro state=present
+
+  - name: To add users
+    user: name={{item}} group=wipro state=present
+   
+    with_items:
+          - user1
+          - user2
+          - user3
+          - user4      
