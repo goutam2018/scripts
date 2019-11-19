@@ -1,0 +1,38 @@
+[1:03 PM, 11/19/2019] +91 90008 08000: Create a playbook that produces an output file called /root/hwreport.txt on managed nodes with the following information:
+	Inventory host name
+	Total memory in MB
+	BIOS version
+	Size of disk device vda
+	Size of disk device vdb
+	Each line of the output file contains a single key=value.
+Your playbook should:
+	
+	Modify /root/hwreport.txt with the correct values
+	If a hardware item does not exist, the associated value should be set to NONE
+[1:05 PM, 11/19/2019] +91 90008 08000: As I wrote like below but need to improve more
+
+- name: Gathering facts
+  hosts: dev
+  user: root
+  become: true
+  tasks:
+    - name: creating file
+      file:
+        path: /root/hwreport.txt
+
+    - name: Adding reports to file
+      copy:
+        dest: /root/hwreport.txt
+        content:  |
+                  Inventory host name= {{ ansible_hostname }}
+                  Total memory in MB = {{ ansible_memtotal_mb }}
+                  BIOS version = {{ ansible_bios_version }}
+                  Size of disk device vda= {{ ansible_devices.sda.size }}
+                  Size of disk device vdb= {{ ansible_devices.sdb.size }}
+      register: facts
+      ignore_errors: yes
+
+    - debug:
+        msg: NONE
+      when: facts is failed
+[1:07 PM, 11/19/2019] +91 90008 08000: If sdb device is not found, The result should be shown as "Size of disk device vdb= NONE"
