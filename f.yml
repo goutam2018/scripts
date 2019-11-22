@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name:To copy file
+    copy:
+      src: "/root/gitrepo"
+      dest: "/opt/gitrepo"
+    debug: 
+      msg: "File Copied!"
+      
