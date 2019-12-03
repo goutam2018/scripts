@@ -1,1 +1,3 @@
-This is Java file--1
+This is Java code 
+
+This is c code
